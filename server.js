@@ -5,7 +5,11 @@ require('dotenv').config();
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+
+// Увеличиваем лимит размера JSON-запроса
+app.use(express.json({ limit: '50mb' }));
+// Добавляем поддержку для urlencoded данных с увеличенным лимитом
+app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 app.post('/api/anthropic', async (req, res) => {
     console.log('Received request:', JSON.stringify(req.body, null, 2));
